@@ -1,7 +1,7 @@
 import boto3
 import time
 
-sqs = boto3.client("sqs")
+sqs = boto3.client("sqs", region_name="us-east-1")
 
 if __name__ == "__main__":
     # Create requestQueue with url from queue created

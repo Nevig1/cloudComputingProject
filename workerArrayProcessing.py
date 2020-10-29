@@ -9,7 +9,7 @@ from datetime import datetime
 from botocore.exceptions import ClientError
 from pip.utils import logging
 
-sqs = boto3.client("sqs")
+sqs = boto3.client("sqs", region_name="us-east-1")
 
 
 # Function that uploads a file to an s3 bucket
@@ -101,7 +101,7 @@ while (1):
         # Close the log file
         logfile.close()
         # Define the bucket name for log upload
-        BUCKET_NAME = 'mybucket42100'
+        BUCKET_NAME = 'lab1corentintse'
         # Upload the log file to s3 Bucket
         upload_file(filename,BUCKET_NAME)
         # Remove the log file from local

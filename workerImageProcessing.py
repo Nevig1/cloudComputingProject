@@ -15,7 +15,7 @@ def upload_file(file_name, bucket, object_name=None):
         object_name = file_name
 
     # Upload the file
-    s3_client = boto3.client('s3')
+    s3_client = boto3.client('s3', region_name="us-east-1")
     try:
         s3_client.upload_file(file_name, bucket, object_name)
     except ClientError as e:
@@ -27,7 +27,7 @@ def upload_file(file_name, bucket, object_name=None):
 # Function that downloads a file from an s3 bucket
 def download_file(file_name, bucket_name):
     try:
-        s3.Bucket(bucket_name).download_file(file_name, 'my_local_image.jpg')
+        s3.Bucket(bucket_name).download_file(file_name, file_name)
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
             print("The object does not exist.")
@@ -35,9 +35,9 @@ def download_file(file_name, bucket_name):
             raise
 
 
-BUCKET_NAME = 'mybucket42100'
-sqs = boto3.client("sqs")
-s3 = boto3.resource('s3')
+BUCKET_NAME = 'lab1corentintse'
+sqs = boto3.client("sqs", region_name="us-east-1")
+s3 = boto3.resource('s3', region_name="us-east-1")
 # Create inboxQueue with url from queue created
 inboxQueue = sqs.get_queue_url(QueueName='inboxQueue')["QueueUrl"]
 # Create outboxQueue with url from queue created
@@ -55,15 +55,15 @@ while (1):
         # Image processing
         img = io.imread(KEY)
         processed_img = rgb2hsv(img)
-        io.imsave("new_image.jpg", processed_img)
+        io.imsave("new_"+KEY, processed_img)
         # Upload new image to S3 bucket
-        upload_file("new_image.jpg", BUCKET_NAME)
+        upload_file("new_"+KEY, BUCKET_NAME)
         # Remove files
         os.remove(KEY)
-        os.remove("new_image.jpg")
+        os.remove("new_"+KEY)
         # Send new message to the client
         sqs.send_message(
-            QueueUrl=outboxQueue, MessageBody="new_image.jpg")
+            QueueUrl=outboxQueue, MessageBody="new_"+KEY)
         # Delete the message with unique id
         receipt_handle = message['ReceiptHandle']
         sqs.delete_message(
