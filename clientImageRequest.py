@@ -4,6 +4,7 @@ import time
 
 import botocore
 from botocore.exceptions import ClientError
+from setup import BUCKET_NAME_SETUP
 
 s3 = boto3.resource('s3', region_name="us-east-1")
 sqs = boto3.resource("sqs", region_name="us-east-1")

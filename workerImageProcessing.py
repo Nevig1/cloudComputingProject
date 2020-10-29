@@ -6,6 +6,7 @@ from botocore.exceptions import ClientError
 from pip.utils import logging
 from skimage import io
 from skimage.color import rgb2hsv
+from setup import BUCKET_NAME_SETUP
 
 
 # Function that uploads a file to an s3 bucket
@@ -35,7 +36,7 @@ def download_file(file_name, bucket_name):
             raise
 
 
-BUCKET_NAME = 'lab1corentintse'
+BUCKET_NAME = BUCKET_NAME_SETUP
 sqs = boto3.client("sqs", region_name="us-east-1")
 s3 = boto3.resource('s3', region_name="us-east-1")
 # Create inboxQueue with url from queue created
