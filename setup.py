@@ -5,12 +5,17 @@ from botocore.exceptions import ClientError
 sqs = boto3.resource("sqs")
 # Create the s3 client using boto3
 s3 = boto3.client("s3")
+# Bucket Name
+BUCKET_NAME_SETUP = 'mybucket42100'
 
 try:
-    # Create the resquestQueue
+    # Create the requestQueue
     sqs.create_queue(QueueName='requestQueue')
     # Create the responseQueue
     sqs.create_queue(QueueName='responseQueue')
-    # s3.create_bucket(Bucket="lab3RequestLogs")
+    # Create the inboxQueue
+    sqs.create_queue(QueueName='inboxQueue')
+    # Create the outboxQueue
+    sqs.create_queue(QueueName='outboxQueue')
 except ClientError as e:
     print(e)

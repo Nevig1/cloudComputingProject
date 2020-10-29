@@ -8,6 +8,7 @@ from datetime import datetime
 # Create the sqs client using boto3
 from botocore.exceptions import ClientError
 from pip.utils import logging
+from setup import BUCKET_NAME_SETUP
 
 sqs = boto3.client("sqs")
 
@@ -101,7 +102,7 @@ while (1):
         # Close the log file
         logfile.close()
         # Define the bucket name for log upload
-        BUCKET_NAME = 'mybucket42100'
+        BUCKET_NAME = BUCKET_NAME_SETUP
         # Upload the log file to s3 Bucket
         upload_file(filename,BUCKET_NAME)
         # Remove the log file from local

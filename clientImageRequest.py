@@ -4,6 +4,7 @@ import time
 
 import botocore
 from botocore.exceptions import ClientError
+from setup import BUCKET_NAME_SETUP
 
 s3 = boto3.resource('s3')
 sqs = boto3.resource("sqs")
@@ -39,7 +40,7 @@ def download_file(file_name, bucket_name):
 if __name__ == "__main__":
     # Instances = ec2.instances.filter()
     KEY = "chat.jpg"
-    BUCKET_NAME = "mybucket42100"
+    BUCKET_NAME = BUCKET_NAME_SETUP
     # Get queues
     inboxQueue = sqs.get_queue_by_name(QueueName='inboxQueue')
     outboxQueue = sqs.get_queue_by_name(QueueName='outboxQueue')
