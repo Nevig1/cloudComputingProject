@@ -25,6 +25,11 @@ Create an S3 Bucket in the AWS console and replace BUCKET_NAME_SETUP in setup.py
 Use filezilla to connect to your EC2 instance and upload workerArrayProcessing.py and workerImageProcessing.py to your EC2 instance.
 Install boto3 and scikit-image within the EC2 instance python environment using install packaging.
 
+Run ec2 instance from command line :
+```bash
+aws ec2 run-instances --image-id INSTANCE_ID --count 1 --instance-type t2.micro --key-name KEY_NAME --security-group-ids sg-05214526c729fc269
+```
+
 Run the two python files
 ``` bash
 python3 workerArrayProcessing.py&
